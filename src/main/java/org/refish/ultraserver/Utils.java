@@ -1,11 +1,17 @@
 package org.refish.ultraserver;
 
+/*
+这是一个常用命令集合
+请开发者不要随意调用此处的任何方法
+最后修改版本: dev_1.6-Beta_ReBuild-3
+已优化代码:yes
+*/
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.lang.reflect.Field;
