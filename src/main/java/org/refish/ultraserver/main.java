@@ -103,34 +103,6 @@ public final class main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void antiChestCriticals(PlayerFallEvent event) {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                Player player=event.getPlayer();
-                Double stY = player.getLocation().getY();
-                Boolean ongroundcheck =player.isOnGround();
-                try {
-                    Thread.sleep(1000);
-                } catch (
-                        InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                Double secY = player.getLocation().getY();
-                if ((stY - secY) > 1 && ! ongroundcheck || player.isOp()) {
-                    //这里是检测通过的区域
-                    //这里使用了玩家tile_Entity303_n的算法
-                } else {
-                    //这里是检测未通过的
-                    player.kickPlayer("setting.anti.chest.AntiCriticals.kickmsg");
-                }
-            }
-        };
-    }
-
-    @EventHandler
     public void AntiSpeeded(org.bukkit.event.player.PlayerMoveEvent event){
         PacketContainer fakeExplosion = new PacketContainer(PacketType.Play.Client.ENTITY_ACTION);
         Player player= event.getPlayer();
