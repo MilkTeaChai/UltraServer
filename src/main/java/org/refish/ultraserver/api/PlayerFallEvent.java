@@ -81,7 +81,7 @@ public class PlayerFallEvent extends PlayerEvent implements Listener {
         return handler;
     }
 
-    public void getWorld(World world){
+    public void setWorld(World world){
         this.world=world;
     }
     public Location getNonairBlock(){

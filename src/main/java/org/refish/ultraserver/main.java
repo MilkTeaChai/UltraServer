@@ -9,13 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.*;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.refish.ultraserver.api.PlayerFallEvent;
+import org.refish.ultraserver.api.PlayerCriticalsEvent;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -29,7 +29,7 @@ public final class main extends JavaPlugin implements Listener {
 
     //全局版本设置 每次新构建时需要修改
     static final String version ="1.7.0.2";
-    static ProtocolManager protocolManager;
+    public static ProtocolManager protocolManager;
 
     @Override
     public void onLoad() {
@@ -116,7 +116,7 @@ public final class main extends JavaPlugin implements Listener {
                 try {
                     sleep(1000);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    getLogger().warning(e+"");
                 }
                 Double thgetX = player.getLocation().getX();
                 Double thgetY = player.getLocation().getY();
@@ -155,7 +155,7 @@ public final class main extends JavaPlugin implements Listener {
                         try {
                             protocolManager.sendServerPacket(player, fakeExplosion);
                         } catch (InvocationTargetException e) {
-                            throw new RuntimeException(e);
+                            getLogger().warning(e+"");
                         }
                     }
                 }
@@ -172,8 +172,27 @@ public final class main extends JavaPlugin implements Listener {
         try {
             protocolManager.sendServerPacket(player, fakeExplosion);
         } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
+            getLogger().warning(e+"");
         }
+    }
+    @EventHandler
+    public void JumpCheck(com.destroystokyo.paper.event.player.PlayerJumpEvent event){
+        Player player = event.getPlayer();
+        main.protocolManager.addPacketListener(new PacketAdapter(
+                this,
+                ListenerPriority.NORMAL,
+                PacketType.Play.Client.USE_ENTITY
+        ) {
+            @Override
+            public void onPacketSending(PacketEvent event) {
+                event.setCancelled(true);
+                Player player2 =event.getPlayer();
+                if (player.equals(player2)){
+                    Event PlayerCriticalsEvent=new PlayerCriticalsEvent(player2);
+                    Bukkit.getPluginManager().callEvent(PlayerCriticalsEvent);
+                }
+            }
+        });
     }
 
 
