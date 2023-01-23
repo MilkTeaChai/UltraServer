@@ -6,3 +6,5 @@
 目前该插件自带API：PlayerFallEvent
 该事件触发器简化了许多普通开发者需要的玩家摔落事件，需要传入一个World对象
 需要的开发者请慢慢食用体会
+# 调用
+目前我们Refish Studio并没有提供Maven库导入，请将Release里的包直接导入您的项目
