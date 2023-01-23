@@ -87,7 +87,7 @@ public final class main extends JavaPlugin implements Listener {
             getLogger().info("反脏话机制已启动");
         }else{
             String reason;
-            if("setting.anti.badword.enable".equals("false")){
+            if(! getConfig().getBoolean("setting.anti.badword.enable")){
                 reason="配置文件中已经禁用反脏话";
             } else{
                 reason="第一次启动或并配置文件不存在";
@@ -160,7 +160,7 @@ public final class main extends JavaPlugin implements Listener {
                     }
                 }
             }
-        };
+        }.start();
         fakeExplosion.getDoubles()
                 .write(0, player.getLocation().getX())
                 .write(1, player.getLocation().getY())
