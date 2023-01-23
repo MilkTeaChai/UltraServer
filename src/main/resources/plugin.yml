@@ -1,0 +1,21 @@
+name: UltraServer
+version: '${project.version}'
+main: org.refish.ultraserver.main
+api-version: 1.14
+depend: [ ProtocolLib ]
+softdepend: [PlaceholderAPI]
+authors: [ Milkteachai ]
+description: A powerful Server Helper
+commands:
+  ultraserver: #指令名
+    description: "主命令" #指令的注解
+    usage: /ultraserver #指令的用法 当onCommand()方法返回false时提示这里的内容
+    aliases: [us] #指令的多种形式 意为可以用 d, de 来触发/demo这个指令
+    permission: "us.reload" #指令所需要的权限
+    permission-message: "无权使用" #当输入者无上方权限时提示该信息
+  ram: #指令名
+    description: "查询内存" #指令的注解
+    usage: /ram #指令的用法 当onCommand()方法返回false时提示这里的内容
+    aliases: [ rc ] #指令的多种形式 意为可以用 d, de 来触发/demo这个指令
+    permission: "us.reload" #指令所需要的权限
+    permission-message: "无权使用" #当输入者无上方权限时提示该信息

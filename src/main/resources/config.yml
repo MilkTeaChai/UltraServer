@@ -1,0 +1,27 @@
+Version: 1.0
+setting:
+  anti:
+    badword:
+      list:
+        - "fuck"
+        - "shit"
+        - "你妈"
+        - "你个"
+        - "脖子右拧"
+        - "wdnmd"
+        - "艹"
+    chest:
+      AntiSpeed:
+        #X轴直线最大运动速度（单位 格/秒）
+        XLong: 12.1
+        #Y轴直线最大运动速度（单位 格/秒）
+        YLong: 19.5
+        #Z轴直线最大运动速度（单位 格/秒）
+        ZLong: 12.5
+        #三角斜线最大运动速度（单位 格/秒）
+        LongJumpLong: 6.75
+      AntiCriticals:
+        kickmsg: "[UltraServer]你是不是开暴击挂了？"
+
+
+  lang: "zh_CN"
