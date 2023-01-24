@@ -7,7 +7,7 @@ This plugin is written for some newbies
 
 这个插件是为了一些新手腐竹而写的
 
-It contains a series of features such as manual memory cleanup, manual drop cleanup, plugin hot load, hot unload, enable, disable world hot load
+It contains a series of features such as manual memory cleanup, manual drop cleanup, plugin hot load, hot unload, enable, disable and world hot load
 
 里面包含手动内存清理，手动掉落物清理，插件热加载，热卸载，启用，禁用 世界热加载 一系列功能
 
