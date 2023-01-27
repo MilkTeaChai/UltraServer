@@ -18,11 +18,11 @@ In the future, we may add automatic drop cleaning in version 1.8.X
 # API
 Currently, the plugin comes with an API: PlayerFallEvent
 
-目前该插件自带API：PlayerFallEvent
+目前该插件自带API：PlayerFallEvent PlayerCriticalsEvent
 
-This event trigger simplifies the player fall event that many common developers need, requiring a World object to be passed in
+PlayerFallEvent trigger simplifies the player fall event that many common developers need, requiring a World object to be passed in
 
-该事件触发器简化了许多普通开发者需要的玩家摔落事件，需要传入一个World对象
+PlayerFallEvent简化了许多普通开发者需要的玩家摔落事件，需要传入一个World对象
 
 If you need it, please use it slowly
 
