@@ -21,8 +21,15 @@ setting:
         ZLong: 12.5
         #三角斜线最大运动速度（单位 格/秒）
         LongJumpLong: 6.75
-      AntiCriticals:
-        kickmsg: "[UltraServer]你是不是开暴击挂了？"
+  AutoClean:
+    #清理间隔 （单位 秒）
+    CleanTime: 360
+    CleanMsgAt60s: "[服务器姬] 地面掉落物将在60秒后被清除！！"
+    CleanMsgAt10s: "[服务器姬] 地面掉落物将在10秒后被清除！！"
+    CleanMsgCountdown: "[服务器姬] 清理倒计时："
+    CleanMsgNow: "[服务器姬] 正在清理垃圾....."
+    #这个内部的”#“代表了垃圾清理的数量，请勿删除，以免报错
+    CleanMsgWhenOver: "[服务器姬] 哟，这次清理了#个垃圾，感觉自己么么哒"
 
 
   lang: "zh_CN"

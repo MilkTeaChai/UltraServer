@@ -15,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
-import org.refish.ultraserver.api.PlayerCriticalsEvent;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -28,7 +27,7 @@ import static org.refish.ultraserver.Utils.Printlns.logoprint;
 public final class main extends JavaPlugin implements Listener {
 
     //全局版本设置 每次新构建时需要修改
-    static final String version ="1.7.0.2";
+    static final String version ="1.7.0.5";
     public static ProtocolManager protocolManager;
 
     @Override
@@ -97,7 +96,9 @@ public final class main extends JavaPlugin implements Listener {
             getLogger().info("正在加载反加速外挂");
             getLogger().info("您其实可以在配置文件中修改检测系统的相关参数");
             getLogger().info("反加速挂加载成功");
-            getLogger().info("正在加载反刀刀暴击挂(算法基于tile_Entity303_n)");
+            getLogger().info("正在加载全自动垃圾清理系统");
+            new AutoClean().start();
+            getLogger().info("全自动清理启动成功！");
             getLogger().warning("由于某些原因，反外挂需要等待加载完毕后才能使用（这并不是什么BUG）");
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
     }
@@ -174,25 +175,6 @@ public final class main extends JavaPlugin implements Listener {
         } catch (InvocationTargetException e) {
             getLogger().warning(e+"");
         }
-    }
-    @EventHandler
-    public void JumpCheck(com.destroystokyo.paper.event.player.PlayerJumpEvent event){
-        Player player = event.getPlayer();
-        main.protocolManager.addPacketListener(new PacketAdapter(
-                this,
-                ListenerPriority.NORMAL,
-                PacketType.Play.Client.USE_ENTITY
-        ) {
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                event.setCancelled(true);
-                Player player2 =event.getPlayer();
-                if (player.equals(player2)){
-                    Event PlayerCriticalsEvent=new PlayerCriticalsEvent(player2);
-                    Bukkit.getPluginManager().callEvent(PlayerCriticalsEvent);
-                }
-            }
-        });
     }
 
 

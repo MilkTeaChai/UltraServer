@@ -29,7 +29,7 @@ public class CommandHandler implements CommandExecutor, Listener {
         // 如果这里注册了多条命令则使用
         if (command.getName().equalsIgnoreCase("ultraserver")) {
             // 你要写的代码
-            if(args[0]==null){
+            if(args==null){
                 sender.sendMessage(helpmsg);
             }
             switch (args[0]) {
@@ -58,19 +58,10 @@ public class CommandHandler implements CommandExecutor, Listener {
 
                         Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
 
-                            if (entity instanceof Item) {
-                                return;
-                            }
-
-                            if (!(entity instanceof Player) && !(entity instanceof Animals) && !(entity instanceof Monster)) {
-                                return;
-                            }
-                            entity.remove();
-                            if (!entity.isDead()) {
-                                return;
-                            }
+                            if (entity instanceof Item && !(entity instanceof Player) && !(entity instanceof Animals) && !(entity instanceof Monster) && !entity.isDead()){
+                                entity.remove();
                             num.getAndIncrement();
-
+                        }
                         }));
                         getLogger().info("垃圾清理完毕");
                     } else {

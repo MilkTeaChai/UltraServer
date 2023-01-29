@@ -1,4 +1,4 @@
-package org.refish.ultraserver.api;
+package org.refish.ultraserver.DeprecatedApi;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;

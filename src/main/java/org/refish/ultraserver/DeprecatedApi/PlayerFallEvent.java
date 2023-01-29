@@ -1,4 +1,4 @@
-package org.refish.ultraserver.api;
+package org.refish.ultraserver.DeprecatedApi;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
