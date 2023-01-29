@@ -16,7 +16,7 @@ In the future, we may add automatic drop cleaning in version 1.8.X
 后期我们可能会在1.8.X版本增加自动掉落物清理功能
 
 # API
-Currently, the plugin comes with an API: PlayerFallEvent
+Currently, the plugin comes with an API: PlayerFallEvent PlayerCriticalsEvent
 
 目前该插件自带API：PlayerFallEvent PlayerCriticalsEvent
 
