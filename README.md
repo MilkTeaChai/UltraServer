@@ -32,7 +32,7 @@ If you need it, please use it slowly
 Please add dependencies in your pom.xml
 请在您的pom.xml里，添加依赖项
 
-[code]
+~~~
 <repositories>
         <repository>
             <id>UltraServer</id>
@@ -47,7 +47,13 @@ Please add dependencies in your pom.xml
             <version>1.7.0.5</version>
         </dependency>
     </dependencies>
-[/code]
+~~~
+And add depend in your plugin.yml
+
+并将依赖添加至你的plugin.yml
+~~~
+depend: [ UltraServer ]
+~~~
 
 If you are developing a Bukkit plugin, write "UltraServer" in the "depend" plugin.yml
 
