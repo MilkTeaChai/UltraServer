@@ -29,9 +29,25 @@ If you need it, please use it slowly
 需要的开发者请慢慢食用体会
 
 # Use It(调用)
-At present, Our Refish Studio does not provide Maven library import, please import the packages in Release directly into your project
+Please add dependencies in your pom.xml
+请在您的pom.xml里，添加依赖项
 
-目前我们Refish Studio并没有提供Maven库导入，请将Release里的包直接导入您的项目
+[code]
+<repositories>
+        <repository>
+            <id>UltraServer</id>
+            <name>A Powerful Bukkit Plugin</name>
+            <url>http://refish-repo.unaux.com/UltraServer/maven-repo</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.refish</groupId>
+            <artifactId>ultraserver</artifactId>
+            <version>1.7.0.5</version>
+        </dependency>
+    </dependencies>
+[/code]
 
 If you are developing a Bukkit plugin, write "UltraServer" in the "depend" plugin.yml
 
