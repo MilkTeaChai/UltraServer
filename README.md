@@ -50,16 +50,12 @@ Please add dependencies in your pom.xml
         </dependency>
     </dependencies>
 ~~~
-And add depend in your plugin.yml
-
-并将依赖添加至你的plugin.yml
-~~~
-depend: [ UltraServer ]
-~~~
-
 If you are developing a Bukkit plugin, write "UltraServer" in the "depend" plugin.yml
 
 如果你开发的是Bukkit插件，请在plugin.yml中的"depend"写入"UltraServer"
+~~~
+depend: [ UltraServer ]
+~~~
 
 THE PLUGIN SOURCE CODE IS PROTECTED BY GNU LICENSE V3.0, PLEASE INDICATE THAT SOME OF THE API COMES FROM THE PLUGIN WHEN USING THE SOURCE CODE OR CALLING RELATED LIBRARIES
 
