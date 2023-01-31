@@ -97,7 +97,9 @@ public final class main extends JavaPlugin implements Listener {
             getLogger().info("您其实可以在配置文件中修改检测系统的相关参数");
             getLogger().info("反加速挂加载成功");
             getLogger().info("正在加载全自动垃圾清理系统");
-            new AutoClean().start();
+            AutoClean ac=new AutoClean();
+            ac.config(getConfig());
+            ac.start();
             getLogger().info("全自动清理启动成功！");
             getLogger().warning("由于某些原因，反外挂需要等待加载完毕后才能使用（这并不是什么BUG）");
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");

@@ -1,26 +1,25 @@
 package org.refish.ultraserver;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 
-import java.io.File;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.refish.ultraserver.Utils;
-
 public class AutoClean extends Thread{
     int itemnum;
+    FileConfiguration config;
+    public void config(FileConfiguration config){
+        this.config=config;
+    }
     public void run() {
 
-        File file = new File("./UltraServer","config.yml");
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         while (true){
     AtomicInteger num = new AtomicInteger();
          Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
              try {sleep(config.getInt("setting.AutoClean.CleanTime")* 1000);
-             Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgAt60s"));
+             Bukkit.broadcastMessage(this.config.getString("setting.AutoClean.CleanMsgAt60s"));
              sleep(60000);
              Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgAt10s"));
              sleep(5000);
