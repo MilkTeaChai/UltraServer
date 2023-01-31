@@ -104,7 +104,6 @@ public final class main extends JavaPlugin implements Listener {
             getLogger().warning("由于某些原因，反外挂需要等待加载完毕后才能使用（这并不是什么BUG）");
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
     }
-    //删除了反外挂功能
 
     @Override
     public void onDisable() {
