@@ -13,6 +13,7 @@ import org.refish.ultraserver.Utils;
 public class AutoClean extends Thread{
     int itemnum;
     public void run() {
+
         File file = new File("./UltraServer","config.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         while (true){
