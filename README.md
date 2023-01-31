@@ -11,22 +11,12 @@ It contains a series of features such as manual memory cleanup, manual drop clea
 
 里面包含手动内存清理，手动掉落物清理，插件热加载，热卸载，启用，禁用 世界热加载 一系列功能
 
-In the future, we may add automatic drop cleaning in version 1.8.X
+We add automatic drop cleaning
 
-后期我们可能会在1.8.X版本增加自动掉落物清理功能
+我们在1.7.0.5版本添加了全自动掉落物清理
 
 # API
-Currently, the plugin comes with an API: PlayerFallEvent PlayerCriticalsEvent
-
-目前该插件自带API：PlayerFallEvent PlayerCriticalsEvent
-
-PlayerFallEvent trigger simplifies the player fall event that many common developers need, requiring a World object to be passed in
-
-PlayerFallEvent简化了许多普通开发者需要的玩家摔落事件，需要传入一个World对象
-
-If you need it, please use it slowly
-
-需要的开发者请慢慢食用体会
+We delete all of API. Please wait for the api coming back in version 1.8.X
 
 # Use It(调用)
 Please add dependencies in your pom.xml
