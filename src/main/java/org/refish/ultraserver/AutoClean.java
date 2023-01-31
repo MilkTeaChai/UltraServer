@@ -13,12 +13,12 @@ import org.refish.ultraserver.Utils;
 public class AutoClean extends Thread{
     int itemnum;
     public void run() {
-        File file = new File("./plugin","config.yml");
+        File file = new File("./UltraServer","config.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         while (true){
     AtomicInteger num = new AtomicInteger();
          Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
-             try {sleep(config.getInt("setting.AutoClean.CleanTime")*1000);
+             try {sleep(config.getInt("setting.AutoClean.CleanTime")* 1000);
              Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgAt60s"));
              sleep(60000);
              Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgAt10s"));
