@@ -100,7 +100,6 @@ public final class main extends JavaPlugin implements Listener {
             ac.config(getConfig());
             ac.start();
             getLogger().info("全自动清理启动成功！");
-            getLogger().warning("由于某些原因，反外挂需要等待加载完毕后才能使用（这并不是什么BUG）");
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
         new Thread(){
             @Override
