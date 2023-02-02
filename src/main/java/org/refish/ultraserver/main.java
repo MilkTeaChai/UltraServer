@@ -94,9 +94,7 @@ public final class main extends JavaPlugin implements Listener {
             }
             getLogger().info("由于配置文件原因,反脏话机制暂未加载 原因:"+reason);
         }
-            getLogger().info("正在加载反加速外挂");
-            getLogger().info("您其实可以在配置文件中修改检测系统的相关参数");
-            getLogger().info("反加速挂加载成功");
+
             getLogger().info("正在加载全自动垃圾清理系统");
             AutoClean ac=new AutoClean();
             ac.config(getConfig());
@@ -110,8 +108,8 @@ public final class main extends JavaPlugin implements Listener {
                 super.run();
                 try {
                     while(true) {
-                        sleep(72000);
-                        Bukkit.broadcastMessage("setting.AutoClean.CleanMsgWhenOver".replace('#', (char) getAtom()));
+                        sleep(720000);
+                        Bukkit.broadcastMessage(getConfig().getString("setting.AutoClean.CleanMsgWhenOver").replace('#', (char) getAtom()));
                         atomicInteger=new AtomicInteger();
                     }
                 } catch (InterruptedException e) {
