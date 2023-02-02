@@ -6,6 +6,8 @@ import org.bukkit.entity.*;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static java.lang.Thread.sleep;
+
 public class AutoClean extends Thread{
 
     FileConfiguration config;
@@ -43,3 +45,21 @@ public class AutoClean extends Thread{
          }));
         }
 }
+class GetAtom implements Runnable{
+    FileConfiguration config;
+    public void config(FileConfiguration config){
+        this.config=config;
+    }
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    sleep(720000);
+                    Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgWhenOver").replace('#', (char) main.getAtom()));
+                    main.atomicInteger = new AtomicInteger();
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }

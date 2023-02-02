@@ -6,7 +6,7 @@
 
     <groupId>org.refish</groupId>
     <artifactId>UltraServer</artifactId>
-    <version>1.7.0.5</version>
+    <version>1.7.0.6</version>
     <packaging>jar</packaging>
 
     <name>UltraServer</name>

@@ -63,14 +63,14 @@ public final class main extends JavaPlugin implements Listener {
             getLogger().info("命令注册成功");
             Bukkit.getPluginManager().registerEvents(this, this);
             getLogger().info("监听器注册成功");
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             //在加载命令时可能会抛出空指针异常，对其捕捉
             getLogger().warning("命令注册失败，原因：空指针");
-        }finally {
+        } finally {
             //始终打印这条信息
             getLogger().warning("插件加载完成");
         }
-        if(getconfig().getBoolean("setting.anti.badword.enable")) {
+        if (getconfig().getBoolean("setting.anti.badword.enable")) {
             getLogger().info("正在加载反脏话机制");
             main.protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.CHAT) {
                 @Override
@@ -85,37 +85,31 @@ public final class main extends JavaPlugin implements Listener {
                 }
             });
             getLogger().info("反脏话机制已启动");
-        }else{
+        } else {
             String reason;
-            if(! getConfig().getBoolean("setting.anti.badword.enable")){
-                reason="配置文件中已经禁用反脏话";
-            } else{
-                reason="第一次启动或并配置文件不存在";
+            if (!getConfig().getBoolean("setting.anti.badword.enable")) {
+                reason = "配置文件中已经禁用反脏话";
+            } else {
+                reason = "第一次启动或并配置文件不存在";
             }
-            getLogger().info("由于配置文件原因,反脏话机制暂未加载 原因:"+reason);
+            getLogger().info("由于配置文件原因,反脏话机制暂未加载 原因:" + reason);
         }
 
-            getLogger().info("正在加载全自动垃圾清理系统");
-            AutoClean ac=new AutoClean();
-            ac.config(getConfig());
-            ac.start();
-            getLogger().info("全自动清理启动成功！");
+        getLogger().info("正在加载全自动垃圾清理系统");
+        AutoClean ac = new AutoClean();
+        ac.config(getConfig());
+        ac.start();
+        GetAtom gm =new GetAtom();
+        gm.config(getConfig());
+        new Thread(gm,"GetAtom").start();
+        getLogger().info("全自动清理启动成功！");
+        if(getConfig().getBoolean("setting.LoopBroadcast.enable")){
+            getLogger().info("正在加载循环广播功能");
+            LoopBroadcast lb =new LoopBroadcast();
+            lb.config(getConfig());
+            new Thread(lb,"LoopBroadcast");
+        }
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    while(true) {
-                        sleep(720000);
-                        Bukkit.broadcastMessage(getConfig().getString("setting.AutoClean.CleanMsgWhenOver").replace('#', (char) getAtom()));
-                        atomicInteger=new AtomicInteger();
-                    }
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }.start();
     }
 
     @Override
@@ -130,7 +124,7 @@ public final class main extends JavaPlugin implements Listener {
         atomicInteger.getAndIncrement();
     }
 
-    public int getAtom(){
+    public static int getAtom(){
         return atomicInteger.get();
     }
 

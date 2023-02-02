@@ -20,6 +20,13 @@ setting:
     CleanMsgNow: "[服务器姬] 正在清理垃圾....."
     #这个内部的”#“代表了垃圾清理的数量，请勿删除，以免报错
     CleanMsgWhenOver: "[服务器姬] 哟，这次清理了#个垃圾，感觉自己么么哒"
-
+  LoopBroadcast:
+    enable: true
+    Msg1: "你可以在这里输入任何你想要的字符"
+    Msg2: "&3我们支持任何的颜色代码"
+    Msg3: "我们的QQ群784885337"
+    Msg4: "感谢使用UltraServer LoopBoradcast  awa"
+    #这里单位 秒
+    TimeInterval: 60
 
   lang: "zh_CN"
