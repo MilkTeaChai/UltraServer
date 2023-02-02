@@ -4,19 +4,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AutoClean extends Thread{
-    int itemnum;
+
     FileConfiguration config;
+    AtomicInteger num = new AtomicInteger();
     public void config(FileConfiguration config){
         this.config=config;
     }
     public void run() {
-
-        while (true){
-    AtomicInteger num = new AtomicInteger();
          Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
              try {sleep(config.getInt("setting.AutoClean.CleanTime")* 1000);
              Bukkit.broadcastMessage(this.config.getString("setting.AutoClean.CleanMsgAt60s"));
@@ -38,12 +35,11 @@ public class AutoClean extends Thread{
              if (itemRules) {
             entity.remove();
             num.getAndIncrement();
+            main.setAtom();
              }
-             Bukkit.broadcastMessage(Objects.requireNonNull(config.getString("setting.AutoClean.CleanMsgWhenOver")).replace('#', (char) num.intValue()));
              } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
          }));
         }
-    }
 }

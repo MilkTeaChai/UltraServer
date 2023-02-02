@@ -11,16 +11,6 @@ setting:
         - "脖子右拧"
         - "wdnmd"
         - "艹"
-    chest:
-      AntiSpeed:
-        #X轴直线最大运动速度（单位 格/秒）
-        XLong: 12.1
-        #Y轴直线最大运动速度（单位 格/秒）
-        YLong: 19.5
-        #Z轴直线最大运动速度（单位 格/秒）
-        ZLong: 12.5
-        #三角斜线最大运动速度（单位 格/秒）
-        LongJumpLong: 6.75
   AutoClean:
     #清理间隔 （单位 秒）
     CleanTime: 360
