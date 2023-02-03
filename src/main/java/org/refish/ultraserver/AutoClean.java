@@ -36,8 +36,7 @@ public class AutoClean extends Thread{
              Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgCountdown")+"1!!");
              sleep(1000);
              Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgNow"));
-             boolean itemRules = entity instanceof Item && !(entity instanceof Player) && !(entity instanceof Animals) && !(entity instanceof Monster) && !entity.isDead();
-             if (itemRules) {
+             if (entity instanceof Item && !(entity instanceof Player) && !entity.isDead()) {
             entity.remove();
             num.getAndIncrement();
             main.setAtom();
