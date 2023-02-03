@@ -98,7 +98,7 @@ public final class main extends JavaPlugin implements Listener {
         getLogger().info("正在加载全自动垃圾清理系统");
         AutoClean ac = new AutoClean();
         ac.config(getConfig());
-        ac.start();
+        new Thread(ac,"AutoClean");
 
         getLogger().info("全自动清理启动成功！");
         if(getConfig().getBoolean("setting.LoopBroadcast.enable")){

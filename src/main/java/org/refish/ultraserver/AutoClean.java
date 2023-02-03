@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.lang.Thread.sleep;
 
-public class AutoClean extends Thread{
+public class AutoClean implements Runnable{
 
     FileConfiguration config;
     AtomicInteger num = new AtomicInteger();
@@ -19,7 +19,7 @@ public class AutoClean extends Thread{
         GetAtom gm =new GetAtom();
         gm.config(config);
         new Thread(gm,"GetAtom").start();
-         Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
+        Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
              try {sleep(config.getInt("setting.AutoClean.CleanTime")* 1000);
              Bukkit.broadcastMessage(this.config.getString("setting.AutoClean.CleanMsgAt60s"));
              sleep(50000);
