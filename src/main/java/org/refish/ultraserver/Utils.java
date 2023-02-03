@@ -17,10 +17,19 @@ import org.bukkit.plugin.*;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.bukkit.Bukkit.getLogger;
 
 public class Utils {
+    public static void AutoCleanMethod(){
+        Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
+            if (entity instanceof Item && !(entity instanceof Player) && !(entity instanceof Animals) && !(entity instanceof Monster) && !entity.isDead()){
+                entity.remove();
+                main.setAtom();
+            }
+        }));
+    }
     public static class Plugins{
         public static Plugin getPluginByName(String name) {
             for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
@@ -183,7 +192,8 @@ public class Utils {
                 "          §3执行服务器白名单并踢出所有玩家 /us whitelist on/off\n" +
                 "          §3服务器所用内存查询(仅限OP) /ram 或/rc\n" +
                 "          §3热加载/卸载插件 /us pl load/unload/enable/disable卸载一个世界/us ulworld\n" +
-                "          §3查看你的环境/us env";
+                "          §3查看你的环境/us env\n"+
+                "          §3传送到一个人那里/tpa 传送一个人到自己这里/tpahere 创造/gmc 生成/gms 冒险/gma (都只能对自己使用) /gm 0/1/2 ";
         }
     }
 

@@ -1,4 +1,5 @@
 Version: 1.0
+FirstRun: true
 setting:
   anti:
     badword:
@@ -28,5 +29,9 @@ setting:
     Msg4: "[服务器姬]感谢使用UltraServer LoopBoradcast  awa"
     #这里单位 秒
     TimeInterval: 60
-
+  Essentials:
+    SpawnWorld: world
+    SpawnX: 0
+    SpawnY: 60
+    SpawnZ: 0
   lang: "zh_CN"

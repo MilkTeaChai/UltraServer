@@ -19,7 +19,6 @@ public class AutoClean implements Runnable{
         GetAtom gm =new GetAtom();
         gm.config(config);
         new Thread(gm,"GetAtom").start();
-        Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
              try {sleep(config.getInt("setting.AutoClean.CleanTime")* 1000);
              Bukkit.broadcastMessage(this.config.getString("setting.AutoClean.CleanMsgAt60s"));
              sleep(50000);
@@ -36,15 +35,10 @@ public class AutoClean implements Runnable{
              Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgCountdown")+"1!!");
              sleep(1000);
              Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgNow"));
-             if (entity instanceof Item && !entity.isDead()) {
-            entity.remove();
-            num.getAndIncrement();
-            main.setAtom();
-             }
+             Utils.AutoCleanMethod();
              } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-         }));
         }
 }
 class GetAtom implements Runnable{

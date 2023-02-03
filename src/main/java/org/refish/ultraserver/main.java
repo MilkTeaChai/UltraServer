@@ -8,27 +8,25 @@ import com.comphenix.protocol.events.*;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.*;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.refish.ultraserver.Utils.Printlns.logoprint;
+import org.refish.ultraserver.EssDedicatedCommandHandler.PlayerTeleportCachePool;
 
 public final class main extends JavaPlugin implements Listener {
 
     //全局版本设置 每次新构建时需要修改
-    static final String version ="1.7.0.6";
+    static final String version ="1.7.0.7";
     public static ProtocolManager protocolManager;
 
     @Override
@@ -56,20 +54,44 @@ public final class main extends JavaPlugin implements Listener {
         //打印Logo
         logoprint();
         getLogger().info("正在加载内部命令");
-        //安全加载指令
-        try {
             Objects.requireNonNull(Bukkit.getPluginCommand("ultraserver")).setExecutor(new CommandHandler());
             Objects.requireNonNull(Bukkit.getPluginCommand("ram")).setExecutor(new CommandHandler());
+            Objects.requireNonNull(Bukkit.getPluginCommand("gm")).setExecutor(new EssDedicatedCommandHandler());
+            Objects.requireNonNull(Bukkit.getPluginCommand("gmc")).setExecutor(new EssDedicatedCommandHandler());
+            Objects.requireNonNull(Bukkit.getPluginCommand("gms")).setExecutor(new EssDedicatedCommandHandler());
+            Objects.requireNonNull(Bukkit.getPluginCommand("gma")).setExecutor(new EssDedicatedCommandHandler());
+            Objects.requireNonNull(Bukkit.getPluginCommand("tpa")).setExecutor(new EssDedicatedCommandHandler());
+            Objects.requireNonNull(Bukkit.getPluginCommand("tpahere")).setExecutor(new EssDedicatedCommandHandler());
+            Objects.requireNonNull(Bukkit.getPluginCommand("tpaccept")).setExecutor(new EssDedicatedCommandHandler());
+            Objects.requireNonNull(Bukkit.getPluginCommand("tpacanel")).setExecutor(new EssDedicatedCommandHandler());
             getLogger().info("命令注册成功");
             Bukkit.getPluginManager().registerEvents(this, this);
             getLogger().info("监听器注册成功");
-        } catch (NullPointerException e) {
-            //在加载命令时可能会抛出空指针异常，对其捕捉
-            getLogger().warning("命令注册失败，原因：空指针");
-        } finally {
-            //始终打印这条信息
-            getLogger().warning("插件加载完成");
-        }
+            getLogger().info("正在加载SQLITE数据库");
+            EssDedicatedCommandHandler edch = new EssDedicatedCommandHandler();
+            SQLiteCommand sc=new SQLiteCommand();
+            Connection conn = null;
+            try {
+                // db parameters
+                String url = "jdbc:sqlite:"+new File(getDataFolder(),"EssentialExpansion.db").getPath();
+                // create a connection to the database
+                conn = DriverManager.getConnection(url);
+                getLogger().warning("Connection to SQLite has been established, URL:"+url);
+                edch.setSQLiteConnection(conn);
+                sc.setSQLiteConnection(conn);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+                getLogger().warning("SQLite加载失败,插件即将自动关闭");
+                Bukkit.getPluginManager().disablePlugin(this);
+            } finally {
+                try {
+                    if (conn != null) {
+                        conn.close();
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
         if (getconfig().getBoolean("setting.anti.badword.enable")) {
             getLogger().info("正在加载反脏话机制");
             main.protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.CHAT) {
@@ -98,7 +120,7 @@ public final class main extends JavaPlugin implements Listener {
         getLogger().info("正在加载全自动垃圾清理系统");
         AutoClean ac = new AutoClean();
         ac.config(getConfig());
-        new Thread(ac,"AutoClean");
+         new Thread(ac,"AutoClean").start();
 
         getLogger().info("全自动清理启动成功！");
         if(getConfig().getBoolean("setting.LoopBroadcast.enable")){
@@ -107,12 +129,24 @@ public final class main extends JavaPlugin implements Listener {
             lb.config(getConfig());
             new Thread(lb,"LoopBroadcast").start();
         }
+        getLogger().info("正在加载Essentials++拓展功能");
+        edch.setConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"config.yml")));
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
+        if  (getConfig().getBoolean("FirstRun")){
+            sc.createNewTable("CREATE TABLE IF NOT EXISTS PlayerHome (\n" + " ID INT PRIMARY KEY NOT NULL,\n"
+                    +" Player text NOT NULL,\n" + " Name text,\n" +  " LocationX real NOT NULL,\n"+ " LocationY real NOT NULL,\n"+ " LocationZ real NOT NULL,\n"+ " World real NOT NULL,\n" +");");
+            getConfig().set("FirstRun",false);
+        }
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        PlayerTeleportCachePool ptcp =new PlayerTeleportCachePool();
+        ptcp.del(1);
+        ptcp.del(2);
+        ptcp.del(3);
+        getLogger().info("TPA功能已关闭");
         getLogger().info("插件已经被卸载了，感谢你的使用UwU");
     }
 

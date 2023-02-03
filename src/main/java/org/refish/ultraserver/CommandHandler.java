@@ -29,7 +29,7 @@ public class CommandHandler implements CommandExecutor, Listener {
         // 如果这里注册了多条命令则使用
         if (command.getName().equalsIgnoreCase("ultraserver")) {
             // 你要写的代码
-            if(args==null){
+            if(args.length == 0){
                 sender.sendMessage(helpmsg);
             }
             switch (args[0]) {
