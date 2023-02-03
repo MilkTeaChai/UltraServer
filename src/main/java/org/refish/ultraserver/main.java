@@ -28,7 +28,7 @@ import static org.refish.ultraserver.Utils.Printlns.logoprint;
 public final class main extends JavaPlugin implements Listener {
 
     //全局版本设置 每次新构建时需要修改
-    static final String version ="1.7.0.5";
+    static final String version ="1.7.0.6";
     public static ProtocolManager protocolManager;
 
     @Override
