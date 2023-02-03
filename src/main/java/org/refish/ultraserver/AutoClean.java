@@ -16,6 +16,9 @@ public class AutoClean extends Thread{
         this.config=config;
     }
     public void run() {
+        GetAtom gm =new GetAtom();
+        gm.config(config);
+        new Thread(gm,"GetAtom").start();
          Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
              try {sleep(config.getInt("setting.AutoClean.CleanTime")* 1000);
              Bukkit.broadcastMessage(this.config.getString("setting.AutoClean.CleanMsgAt60s"));
@@ -54,7 +57,7 @@ class GetAtom implements Runnable{
         public void run() {
             try {
                 while (true) {
-                    sleep(420000);
+                    sleep(config.getInt("setting.AutoClean.CleanTime")* 1000+50000+5000+1000+1000+1000+1000+1000+1000);
                     Bukkit.broadcastMessage(config.getString("setting.AutoClean.CleanMsgWhenOver").replace('#', (char) main.getAtom()));
                     main.atomicInteger = new AtomicInteger();
                 }

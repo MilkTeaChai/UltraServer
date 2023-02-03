@@ -99,15 +99,13 @@ public final class main extends JavaPlugin implements Listener {
         AutoClean ac = new AutoClean();
         ac.config(getConfig());
         ac.start();
-        GetAtom gm =new GetAtom();
-        gm.config(getConfig());
-        new Thread(gm,"GetAtom").start();
+
         getLogger().info("全自动清理启动成功！");
         if(getConfig().getBoolean("setting.LoopBroadcast.enable")){
             getLogger().info("正在加载循环广播功能");
             LoopBroadcast lb =new LoopBroadcast();
             lb.config(getConfig());
-            new Thread(lb,"LoopBroadcast");
+            new Thread(lb,"LoopBroadcast").start();
         }
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
     }
