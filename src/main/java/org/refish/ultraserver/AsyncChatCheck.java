@@ -9,6 +9,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.util.List;
 import java.util.Objects;
 
+
 public class AsyncChatCheck implements Listener {
     FileConfiguration config;
 

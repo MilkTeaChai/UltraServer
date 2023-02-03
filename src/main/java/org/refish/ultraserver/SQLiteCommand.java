@@ -21,6 +21,7 @@ public class SQLiteCommand {
             System.out.println(e.getMessage());
         }
     }
+
     public void insertHomeInfo(String Player, String Name,double LocationX,double LocationY,double LocationZ,String World) {
         String sql = "INSERT INTO PlayerHome(Player, Name, LocationX, LocationY, LocationZ, World) VALUES(?,?)";
 

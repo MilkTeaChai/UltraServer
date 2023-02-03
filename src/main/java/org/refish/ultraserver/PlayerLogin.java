@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -28,6 +29,11 @@ public class PlayerLogin implements Runnable,Listener{
     }
     public void setLoginConfig(FileConfiguration config){
         Loginconfig=config;
+    }
+
+    @EventHandler
+    public void PlayerQuitCheck(PlayerQuitEvent event){
+        new PlayerLoginCommandHandler().map.put(event.getPlayer(),false);
     }
     @EventHandler
     public void PlayerLoginCheck(PlayerJoinEvent event){

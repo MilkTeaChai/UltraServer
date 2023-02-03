@@ -11,6 +11,7 @@ import static java.lang.Thread.sleep;
 public class AutoClean implements Runnable{
 
     FileConfiguration config;
+
     AtomicInteger num = new AtomicInteger();
     public void config(FileConfiguration config){
         this.config=config;

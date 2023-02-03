@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public final class main extends JavaPlugin implements Listener {
     public void onLoad() {
         saveDefaultConfig();
         saveResource("LoginMsg.yml",false);
-        boolean EnvCheckPassed =System.getProperty( "java.specification.version").equals("17") && !Objects.equals(Bukkit.getServer().getName(),"CraftBukkit");
+        boolean EnvCheckPassed =!System.getProperty( "java.specification.version").equals("1.7") && !Objects.equals(Bukkit.getServer().getName(),"CraftBukkit");
         getLogger().info("§b======[§5环境检查§b]======");
         getLogger().info("§5正在检查你的环境：");
         getLogger().info("§5服务器版本："+Bukkit.getVersion());
@@ -34,8 +35,8 @@ public final class main extends JavaPlugin implements Listener {
         getLogger().info("§5插件版本："+version);
         getLogger().info("§5你的Java版本："+System.getProperty("java.specification.version"));
         getLogger().info("§5你的系统的位数："+System.getProperty("sun.arch.data.model"));
-        if(! System.getProperty( "java.specification.version").equals("17")){
-            getLogger().warning("§c您的Java版本"+System.getProperty("java.version")+"将在未来不受Refish的支持，请将Java版本升级为Java17或更高");
+        if(! System.getProperty( "java.specification.version").equals("1.7")){
+            getLogger().warning("§c您的Java版本"+System.getProperty("java.version")+"将在未来不受Refish的支持，请将Java版本升级为Java8或更高");
         }
         if(Objects.equals(Bukkit.getServer().getName(),"CraftBukkit")){
             getLogger().warning("§c你的服务端可能对该插件的适配性很差，请考虑使用Akarin或Purpur");
@@ -77,35 +78,26 @@ public final class main extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(acc, this);
             getLogger().info("监听器注册成功");
             getLogger().info("正在加载SQLITE数据库");
+
             EssDedicatedCommandHandler edch = new EssDedicatedCommandHandler();
             SQLiteCommand sc=new SQLiteCommand();
             Connection conn = null;
             try {
                 if  (getConfig().getBoolean("FirstRun")){
-                    sc.createNewTable("""
-                            CREATE TABLE IF NOT EXISTS PlayerHome (
-                             ID INT PRIMARY KEY NOT NULL,
-                             Player text NOT NULL,
-                             Name text,
-                             LocationX real NOT NULL,
-                             LocationY real NOT NULL,
-                             LocationZ real NOT NULL,
-                             World real NOT NULL,
-                            );""");
-                    sc.createNewTable("""
-                            CREATE TABLE IF NOT EXISTS LoginPassword (
-                             ID INT PRIMARY KEY NOT NULL,
-                             Player text NOT NULL,
-                             Password text,
-                            );""");
+                    conn = DriverManager.getConnection("jdbc:sqlite:"+new File(getDataFolder(),"UltraServer.db").getPath());
+                    DatabaseMetaData meta = conn.getMetaData();
+                    sc.setSQLiteConnection(conn);
+                    sc.createNewTable("CREATE TABLE IF NOT EXISTS PlayerHome (\n ID INT PRIMARY KEY NOT NULL,\n Player text NOT NULL,\n Name text,\n LocationX real NOT NULL,\n LocationY real NOT NULL,\n LocationZ real NOT NULL,\n World real NOT NULL, \n);");
+                    sc.createNewTable("CREATE TABLE IF NOT EXISTS LoginPassword (\n INT PRIMARY KEY NOT NULL,\n Player text NOT NULL,\n Password text,\n);");
                     getConfig().set("FirstRun",false);
-                }
+                }else{
                 // db parameters
                 String url = "jdbc:sqlite:"+new File(getDataFolder(),"UltraServer.db").getPath();
                 // create a connection to the database
                 conn = DriverManager.getConnection(url);
                 getLogger().warning("Connection to SQLite has been established, URL:"+url);
                 sc.setSQLiteConnection(conn);
+                }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
                 getLogger().warning("SQLite加载失败,插件即将自动关闭");

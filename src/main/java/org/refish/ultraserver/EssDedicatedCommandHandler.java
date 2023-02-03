@@ -292,42 +292,41 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
 
         public void save(int ID, Player from, Player to) {
             switch (ID) {
-                case 1-> {
+                case 1:
                     from = Player1_1;
                     to = Player1_2;
                     CheckID = 1;
                     new Thread(this, "PlayerTeleportCheck1").start();
-                }
-                case 2-> {
+                    break;
+                case 2:
                     from = Player2_1;
                     to = Player2_2;
                     new Thread(this, "PlayerTeleportCheck2").start();
-                }
-                case 3-> {
+                    break;
+                case 3:
                     from = Player3_1;
                     to = Player3_2;
                     new Thread(this, "PlayerTeleportCheck3").start();
-                }
+                    break;
             }
         }
 
         public void del(int ID) {
             switch (ID) {
-                case 1 -> {
+                case 1 :
                     Player1_1 = Player1_2 = null;
                     player1 = false;
-                }
-                case 2 -> {
+                    break;
+                case 2 :
                     Player2_1 = Player2_2 = null;
                     player2 = false;
-            }
-                case 3-> {
+                    break;
+                case 3:
                     Player3_1 = Player3_2 = null;
                     player3 = false;
-                }
+                    break;
             }
         }
-
         @Override
         public void run() {
             try {
