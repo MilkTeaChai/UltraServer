@@ -193,7 +193,8 @@ public class Utils {
                 "          §3服务器所用内存查询(仅限OP) /ram 或/rc\n" +
                 "          §3热加载/卸载插件 /us pl load/unload/enable/disable卸载一个世界/us ulworld\n" +
                 "          §3查看你的环境/us env\n"+
-                "          §3传送到一个人那里/tpa 传送一个人到自己这里/tpahere 创造/gmc 生成/gms 冒险/gma (都只能对自己使用) /gm 0/1/2 ";
+                "          §3传送到一个人那里/tpa 传送一个人到自己这里/tpahere 创造/gmc 生成/gms 冒险/gma (都只能对自己使用) /gm 0/1/2 \n"+
+                "          §3创建家/sethome 创建出生点/setspawn";
         }
     }
 

@@ -37,7 +37,7 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
             if(args.length == 0){
                 sender.sendMessage(helpmsg);
             }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+                sender.sendMessage("§5[§d服务器姬§5] §3这个指令只能让玩家使用。");
             } else {
                 Player player = (Player) sender;
                 // 所需要执行的事（此处略）
@@ -55,10 +55,8 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
             }
 
         } else if (command.getName().equalsIgnoreCase("gms")) {
-            if(args.length == 0){
-                sender.sendMessage(helpmsg);
-            }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+            if (!(sender instanceof Player)) { //如果sender与Player类不匹配
+                sender.sendMessage("§5[§d服务器姬§5] §3这个指令只能让玩家使用。");
             } else {
                 Player player = (Player) sender;
                 // 所需要执行的事（此处略）
@@ -73,7 +71,7 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
                 sender.sendMessage(helpmsg);
             }
             if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+                sender.sendMessage("§5[§d服务器姬§5] §3这个指令只能让玩家使用。");
             } else {
                 Player player = (Player) sender;
                 // 所需要执行的事（此处略）
@@ -85,11 +83,8 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
             }
 
         } else if (command.getName().equalsIgnoreCase("gma")) {
-            if(args.length == 0){
-                sender.sendMessage(helpmsg);
-            }
             if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+                sender.sendMessage("§5[§d服务器姬§5] §3这个指令只能让玩家使用。");
             } else {
                 Player player = (Player) sender;
                 // 所需要执行的事（此处略）
@@ -103,32 +98,32 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
             if(args.length == 0){
                 sender.sendMessage(helpmsg);
             }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+                sender.sendMessage("§5[§d服务器姬§5] §3这个指令只能让玩家使用。");
             } else {
                 Player player = (Player) sender;
                 // 所需要执行的事（此处略）
                 Player player2 = Bukkit.getPlayer(args[0]);
                 if (!player2.isOnline()) {
-                    sender.sendMessage("§5[§bUltraServer§5] §3玩家" + args[0] + "不在线");
+                    sender.sendMessage("§5[§d服务器姬§5] §3玩家" + args[0] + "不在线");
                 } else {
                     PlayerTeleportCachePool ptc = new PlayerTeleportCachePool();
                     if (!ptc.player1) {
-                        player.sendMessage("§5[§bUltraServer§5] §3请求已成功发出 (你的传送ID为1)(请求将在30秒后失效)");
+                        player.sendMessage("§5[§d服务器姬§5] §3请求已成功发出 (你的传送ID为1)(请求将在30秒后失效)");
                         ptc.player1 = true;
                         ptc.save(1, player, player2);
-                        player2.sendMessage("§5[§bUltraServer§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)(请求将在30秒后失效)");
+                        player2.sendMessage("§5[§d服务器姬§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)(请求将在30秒后失效)");
                     } else if (!ptc.player2) {
-                        player.sendMessage("§5[§bUltraServer§5] §3请求已成功发出 (你的传送ID为2)(请求将在30秒后失效)");
+                        player.sendMessage("§5[§d服务器姬§5] §3请求已成功发出 (你的传送ID为2)(请求将在30秒后失效)");
                         ptc.player2 = true;
                         ptc.save(2, player, player2);
-                        player2.sendMessage("§5[§bUltraServer§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)");
+                        player2.sendMessage("§5[§d服务器姬§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)");
                     } else if (!ptc.player3) {
-                        player.sendMessage("§5[§bUltraServer§5] §3请求已成功发出 (你的传送ID为3)(请求将在30秒后失效)");
+                        player.sendMessage("§5[§d服务器姬§5] §3请求已成功发出 (你的传送ID为3)(请求将在30秒后失效)");
                         ptc.player3 = true;
                         ptc.save(3, player, player2);
-                        player2.sendMessage("§5[§bUltraServer§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)");
+                        player2.sendMessage("§5[§d服务器姬§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)");
                     } else {
-                        player.sendMessage("§5[§bUltraServer§5] §3请求爆满，请稍等重试");
+                        player.sendMessage("§5[§d服务器姬§5] §3请求爆满，请稍等重试");
                     }
                 }
             }
@@ -137,120 +132,116 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
             if(args.length == 0){
                 sender.sendMessage(helpmsg);
             }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+                sender.sendMessage("§5[§d服务器姬§5] §3这个指令只能让玩家使用。");
             } else {
                 Player player = (Player) sender;
                 // 所需要执行的事（此处略）
                 Player player2 = Bukkit.getPlayer(args[0]);
                 if (!player2.isOnline()) {
-                    sender.sendMessage("§5[§bUltraServer§5] §3玩家" + args[0] + "不在线");
+                    sender.sendMessage("§5[§d服务器姬§5] §3玩家" + args[0] + "不在线");
                 } else {
                     PlayerTeleportCachePool ptc = new PlayerTeleportCachePool();
                     if (!ptc.player1) {
-                        player.sendMessage("§5[§bUltraServer§5] §3请求已成功发出 (你的传送ID为1)(请求将在30秒后失效)");
+                        player.sendMessage("§5[§d服务器姬§5] §3请求已成功发出 (你的传送ID为1)(请求将在30秒后失效)");
                         ptc.player1 = true;
                         ptc.save(1, player2, player);
-                        player2.sendMessage("§5[§bUltraServer§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)(请求将在30秒后失效)");
+                        player2.sendMessage("§5[§d服务器姬§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)(请求将在30秒后失效)");
                     } else if (!ptc.player2) {
-                        player.sendMessage("§5[§bUltraServer§5] §3请求已成功发出 (你的传送ID为2)(请求将在30秒后失效)");
+                        player.sendMessage("§5[§d服务器姬§5] §3请求已成功发出 (你的传送ID为2)(请求将在30秒后失效)");
                         ptc.player2 = true;
                         ptc.save(2, player2, player);
-                        player2.sendMessage("§5[§bUltraServer§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)");
+                        player2.sendMessage("§5[§d服务器姬§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)");
                     } else if (!ptc.player3) {
-                        player.sendMessage("§5[§bUltraServer§5] §3请求已成功发出 (你的传送ID为3)(请求将在30秒后失效)");
+                        player.sendMessage("§5[§d服务器姬§5] §3请求已成功发出 (你的传送ID为3)(请求将在30秒后失效)");
                         ptc.player3 = true;
                         ptc.save(3, player2, player);
-                        player2.sendMessage("§5[§bUltraServer§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)");
+                        player2.sendMessage("§5[§d服务器姬§5] §3玩家" + player.getName() + "希望传送到你那里，你是否允许？(允许/tpaccept 拒绝/tpacanel)");
                     } else {
-                        player.sendMessage("§5[§bUltraServer§5] §3请求爆满，请稍等重试");
+                        player.sendMessage("§5[§d服务器姬§5] §3请求爆满，请稍等重试");
                     }
                 }
             }
 
         }else if (command.getName().equalsIgnoreCase("tpaccept")) {
-            if(args.length == 0){
-                sender.sendMessage(helpmsg);
-            }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+            if (!(sender instanceof Player)) { //如果sender与Player类不匹配
+                sender.sendMessage("§5[§d服务器姬§5] §3 这个指令只能让玩家使用。");
             } else{
             PlayerTeleportCachePool ptc = new PlayerTeleportCachePool();
             if ((Player) sender == ptc.Player1_1){
-                sender.sendMessage("§5[§bUltraServer§5] §3正在传送");
+                sender.sendMessage("§5[§d服务器姬§5] §3正在传送");
                 ((Player) sender).teleport(ptc.Player1_2);
                 ptc.player1=false;
                 ptc.del(1);
             }else if ((Player) sender == ptc.Player1_2){
-                sender.sendMessage("§5[§bUltraServer§5] §3正在传送");
+                sender.sendMessage("§5[§d服务器姬§5] §3正在传送");
                 ptc.Player1_1.teleport(((Player) sender));
                 ptc.player1=false;
             }else if ((Player) sender == ptc.Player2_1){
-                sender.sendMessage("§5[§bUltraServer§5] §3正在传送");
+                sender.sendMessage("§5[§d服务器姬§5] §3正在传送");
                 ((Player) sender).teleport(ptc.Player2_2);
                 ptc.player1=false;
             }else if ((Player) sender == ptc.Player2_2){
-                sender.sendMessage("§5[§bUltraServer§5] §3正在传送");
+                sender.sendMessage("§5[§d服务器姬§5] §3正在传送");
                 ptc.Player2_1.teleport(((Player) sender));
                 ptc.player1=false;
             }else if ((Player) sender == ptc.Player3_1){
-                sender.sendMessage("§5[§bUltraServer§5] §3正在传送");
+                sender.sendMessage("§5[§d服务器姬§5] §3正在传送");
                 ((Player) sender).teleport(ptc.Player3_2);
                 ptc.player1=false;
             }else if ((Player) sender == ptc.Player3_2){
-                sender.sendMessage("§5[§bUltraServer§5] §3正在传送");
+                sender.sendMessage("§5[§d服务器姬§5] §3正在传送");
                 ptc.Player3_1.teleport(((Player) sender));
                 ptc.player1=false;
             }else{
-                sender.sendMessage("§5[§bUltraServer§5] §3没有查询到您的请求，亲");
+                sender.sendMessage("§5[§d服务器姬§5] §3没有查询到您的请求，亲");
             }
             }
 
         } else if (command.getName().equalsIgnoreCase("tpacanel")) {
-            if(args.length == 0){
-                sender.sendMessage(helpmsg);
-            }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+            if (!(sender instanceof Player)) { //如果sender与Player类不匹配
+                sender.sendMessage("§5[§d服务器姬§5] §3这个指令只能让玩家使用。");
             } else{
                 PlayerTeleportCachePool ptc = new PlayerTeleportCachePool();
                 if ((Player) sender == ptc.Player1_1){
-                    ptc.Player1_2.sendMessage("§5[§bUltraServer§5] §3对方拒绝了你的请求");
-                    ((Player) sender).sendMessage("§5[§bUltraServer§5] §3已拒绝传送请求");
+                    ptc.Player1_2.sendMessage("§5[§d服务器姬§5] §3对方拒绝了你的请求");
+                    ((Player) sender).sendMessage("§5[§d服务器姬§5] §3已拒绝传送请求");
                     ptc.player1=false;
                     ptc.del(1);
                 }else if ((Player) sender == ptc.Player1_2){
-                    ptc.Player1_1.sendMessage("§5[§bUltraServer§5] §3对方拒绝了你的请求");
-                    ((Player) sender).sendMessage("§5[§bUltraServer§5] §3已拒绝传送请求");
+                    ptc.Player1_1.sendMessage("§5[§d服务器姬§5] §3对方拒绝了你的请求");
+                    ((Player) sender).sendMessage("§5[§d服务器姬§5] §3已拒绝传送请求");
                     ptc.player1=false;
                     ptc.del(1);
                     ptc.Player1_1.teleport(((Player) sender));
                 }else if ((Player) sender == ptc.Player2_1){
-                    ptc.Player2_2.sendMessage("§5[§bUltraServer§5] §3对方拒绝了你的请求");
-                    ((Player) sender).sendMessage("§5[§bUltraServer§5] §3已拒绝传送请求");
+                    ptc.Player2_2.sendMessage("§5[§d服务器姬§5] §3对方拒绝了你的请求");
+                    ((Player) sender).sendMessage("§5[§d服务器姬§5] §3已拒绝传送请求");
                     ptc.player1=false;
                     ptc.del(2);
                 }else if ((Player) sender == ptc.Player2_2){
-                    ptc.Player2_1.sendMessage("§5[§bUltraServer§5] §3对方拒绝了你的请求");
-                    ((Player) sender).sendMessage("§5[§bUltraServer§5] §3已拒绝传送请求");
+                    ptc.Player2_1.sendMessage("§5[§d服务器姬§5] §3对方拒绝了你的请求");
+                    ((Player) sender).sendMessage("§5[§d服务器姬§5] §3已拒绝传送请求");
                     ptc.player1=false;
                     ptc.del(2);
                 }else if ((Player) sender == ptc.Player3_1){
-                    ptc.Player3_2.sendMessage("§5[§bUltraServer§5] §3对方拒绝了你的请求");
-                    ((Player) sender).sendMessage("§5[§bUltraServer§5] §3已拒绝传送请求");
+                    ptc.Player3_2.sendMessage("§5[§d服务器姬§5] §3对方拒绝了你的请求");
+                    ((Player) sender).sendMessage("§5[§d服务器姬§5] §3已拒绝传送请求");
                     ptc.player1=false;
                     ptc.del(3);
                 }else if ((Player) sender == ptc.Player3_2){
-                    ptc.Player3_1.sendMessage("§5[§bUltraServer§5] §3对方拒绝了你的请求");
-                    ((Player) sender).sendMessage("§5[§bUltraServer§5] §3已拒绝传送请求");
+                    ptc.Player3_1.sendMessage("§5[§d服务器姬§5] §3对方拒绝了你的请求");
+                    ((Player) sender).sendMessage("§5[§d服务器姬§5] §3已拒绝传送请求");
                     ptc.player1=false;
                     ptc.del(3);
                 }else{
-                    sender.sendMessage("§5[§bUltraServer§5] §3没有查询到您的请求，亲");
+                    sender.sendMessage("§5[§d服务器姬§5] §3没有查询到您的请求，亲");
                 }
         }
         }else if (command.getName().equalsIgnoreCase("setspawn")) {
             if(args.length == 0){
                 sender.sendMessage(helpmsg);
             }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+                sender.sendMessage("§5[§d服务器姬§5] §3 这个指令只能让玩家使用。");
             }else{
                 Location pl =((Player) sender).getLocation();
                 config.set("setting.Essentials.SpawnWorld",pl.getWorld().getName());
@@ -258,11 +249,9 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
                 config.set("setting.Essentials.SpawnY",pl.getY());
                 config.set("setting.Essentials.SpawnZ",pl.getZ());
             }
-        }else if (command.getName().equalsIgnoreCase("setspawn")) {
-            if(args.length == 0){
-                sender.sendMessage(helpmsg);
-            }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+        }else if (command.getName().equalsIgnoreCase("spawn")) {
+            if (!(sender instanceof Player)) { //如果sender与Player类不匹配
+                sender.sendMessage("§5[§d服务器姬§5] §3 这个指令只能让玩家使用。");
             }else{
                 Location pl =new Location(Bukkit.getWorld(config.getString("setting.Essentials.SpawnWorld")),config.getDouble("setting.Essentials.SpawnX"),config.getDouble("setting.Essentials.SpawnY"),config.getDouble("setting.Essentials.SpawnZ"));
                 ((Player) sender).teleport(pl);
@@ -271,20 +260,20 @@ public class EssDedicatedCommandHandler implements CommandExecutor, Listener {
             if(args.length == 0){
                 sender.sendMessage(helpmsg);
             }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+                sender.sendMessage("§5[§d服务器姬§5] §3 这个指令只能让玩家使用。");
             }else{
                 sc.insert(sender.getName(),args[0],((Player) sender).getLocation().getX(),((Player) sender).getLocation().getY(),((Player) sender).getLocation().getZ(),((Player) sender).getLocation().getWorld().getName());
-                sender.sendMessage("§5[§bUltraServer§5] §3设置成功");
+                sender.sendMessage("§5[§d服务器姬§5] §3设置成功");
             }
-        }else if (command.getName().equalsIgnoreCase("sethome")) {
+        }else if (command.getName().equalsIgnoreCase("home")) {
             if(args.length == 0){
                 sender.sendMessage(helpmsg);
             }else if (!(sender instanceof Player)) { //如果sender与Player类不匹配
-                sender.sendMessage("这个指令只能让玩家使用。");
+                sender.sendMessage("§5[§d服务器姬§5] §3 你必须输入一个名称。");
             }else{
                 Location location=sc.select(sender.getName(),args[0]);
                 if(location==null){
-                    sender.sendMessage("§5[§bUltraServer§5] §3并没有找到你设置的家");
+                    sender.sendMessage("§5[§d服务器姬§5] §3并没有找到你设置的家");
                 }else{
                     ((Player) sender).teleport(location);
                 }

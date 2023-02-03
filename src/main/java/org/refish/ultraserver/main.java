@@ -64,6 +64,10 @@ public final class main extends JavaPlugin implements Listener {
             Objects.requireNonNull(Bukkit.getPluginCommand("tpahere")).setExecutor(new EssDedicatedCommandHandler());
             Objects.requireNonNull(Bukkit.getPluginCommand("tpaccept")).setExecutor(new EssDedicatedCommandHandler());
             Objects.requireNonNull(Bukkit.getPluginCommand("tpacanel")).setExecutor(new EssDedicatedCommandHandler());
+        Objects.requireNonNull(Bukkit.getPluginCommand("setspawn")).setExecutor(new EssDedicatedCommandHandler());
+        Objects.requireNonNull(Bukkit.getPluginCommand("spawn")).setExecutor(new EssDedicatedCommandHandler());
+        Objects.requireNonNull(Bukkit.getPluginCommand("sethome")).setExecutor(new EssDedicatedCommandHandler());
+        Objects.requireNonNull(Bukkit.getPluginCommand("home")).setExecutor(new EssDedicatedCommandHandler());
             getLogger().info("命令注册成功");
             Bukkit.getPluginManager().registerEvents(this, this);
             getLogger().info("监听器注册成功");

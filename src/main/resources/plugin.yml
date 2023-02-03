@@ -11,11 +11,73 @@ commands:
     description: "主命令" #指令的注解
     usage: /ultraserver #指令的用法 当onCommand()方法返回false时提示这里的内容
     aliases: [us] #指令的多种形式 意为可以用 d, de 来触发/demo这个指令
-    permission: "us.reload" #指令所需要的权限
-    permission-message: "无权使用" #当输入者无上方权限时提示该信息
+    permission: "us.help" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
   ram: #指令名
     description: "查询内存" #指令的注解
     usage: /ram #指令的用法 当onCommand()方法返回false时提示这里的内容
     aliases: [ rc ] #指令的多种形式 意为可以用 d, de 来触发/demo这个指令
     permission: "us.reload" #指令所需要的权限
-    permission-message: "无权使用" #当输入者无上方权限时提示该信息
+    permission-message: "§5[§d服务器姬§5] §3无权使用" #当输入者无上方权限时提示该信息
+  gm: #指令名
+    description: "切换模式" #指令的注解
+    usage: /gm 0,1,2,3 #指令的用法 当onCommand()方法返回false时提示这里的内容
+    aliases: [ rc ] #指令的多种形式 意为可以用 d, de 来触发/demo这个指令
+    permission: "us.reload" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用" #当输入者无上方权限时提示该信息
+  gms: #指令名
+    description: "切换至生存模式" #指令的注解
+    usage: /gms #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.reload" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用" #当输入者无上方权限时提示该信息
+  gma: #指令名
+    description: "切换至冒险模式" #指令的注解
+    usage: /ram #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.reload" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用" #当输入者无上方权限时提示该信息
+  gmc: #指令名
+    description: "切换至创造模式" #指令的注解
+    usage: /ram #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.reload" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用" #当输入者无上方权限时提示该信息
+  tpa: #指令名
+    description: "传送到某个玩家" #指令的注解
+    usage: /tpa <player> #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.tpa" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
+  tpahere: #指令名
+    description: "传送某个玩家到你这里" #指令的注解
+    usage: /tpahere <player> #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.tpahere" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
+  tpaccept: #指令名
+    description: "允许传送请求" #指令的注解
+    usage: /tpaccept #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.tpaccept" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
+  tpacanel: #指令名
+    description: "传送" #指令的注解
+    usage: /tpa <player> #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.tpa" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
+  home: #指令名
+    description: "传送到家" #指令的注解
+    usage: /home name #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.home" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
+  sethome: #指令名
+    description: "设置家" #指令的注解
+    usage: /home <name(NotNull)> #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.home" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
+  setspawn: #指令名
+    description: "设置出生点" #指令的注解
+    usage: /setspawn #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.reload" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用" #当输入者无上方权限时提示该信息
+  spawn: #指令名
+    description: "设置出生点" #指令的注解
+    usage: /spawn #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.spawn" #指令所需要的权限
+    permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
+
