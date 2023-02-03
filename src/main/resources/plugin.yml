@@ -2,10 +2,22 @@ name: UltraServer
 version: '${project.version}'
 main: org.refish.ultraserver.main
 api-version: 1.14
-depend: [ ProtocolLib ]
+depend: [ ]
 softdepend: [PlaceholderAPI]
 authors: [ Milkteachai ]
 description: A powerful Server Helper
+
+permissions:
+  us.login:
+    description: 'Permission to use the login command'
+    default: true
+  us.register:
+    description: 'Permission to use the register command'
+    default: true
+  us.changepassword:
+    description: 'Permission to use the changepassword command'
+    default: true
+
 commands:
   ultraserver: #指令名
     description: "主命令" #指令的注解
@@ -80,4 +92,22 @@ commands:
     usage: /spawn #指令的用法 当onCommand()方法返回false时提示这里的内容
     permission: "us.spawn" #指令所需要的权限
     permission-message: "§5[§d服务器姬§5] §3无权使用(正常可以使用的呀？可能是腐竹忘给权限了，赶紧跟腐竹说吧)" #当输入者无上方权限时提示该信息
+  login: #指令名
+    description: "登录" #指令的注解
+    usage: /login
+    #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.login" #指令所需要的权限
+    aliases: [ l ]
+  register: #指令名
+    description: "登录" #指令的注解
+    usage: /register
+    #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.register" #指令所需要的权限
+    aliases: [ r ]
+  changepassword:
+    description: "注册" #指令的注解
+    usage: /changepasword
+    #指令的用法 当onCommand()方法返回false时提示这里的内容
+    permission: "us.changepassword" #指令所需要的权限
+    aliases: [ cp ]
 

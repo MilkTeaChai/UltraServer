@@ -1,22 +1,16 @@
 package org.refish.ultraserver;
 
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.*;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,26 +20,30 @@ import org.refish.ultraserver.EssDedicatedCommandHandler.PlayerTeleportCachePool
 public final class main extends JavaPlugin implements Listener {
 
     //全局版本设置 每次新构建时需要修改
-    static final String version ="1.7.0.7";
-    public static ProtocolManager protocolManager;
-
+    static final String version ="1.7.0.8";
     @Override
     public void onLoad() {
         saveDefaultConfig();
-        File file = new File(getDataFolder(),"config.yml");
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+        saveResource("LoginMsg.yml",false);
+        boolean EnvCheckPassed =System.getProperty( "java.specification.version").equals("17") && !Objects.equals(Bukkit.getServer().getName(),"CraftBukkit");
         getLogger().info("§b======[§5环境检查§b]======");
         getLogger().info("§5正在检查你的环境：");
         getLogger().info("§5服务器版本："+Bukkit.getVersion());
         getLogger().info("§5BukkitAPI版本："+Bukkit.getBukkitVersion());
         getLogger().info("§5服务端："+Bukkit.getServer().getName());
-        if(Objects.equals(Bukkit.getServer().getName(),"CraftBukkit")){
-            getLogger().warning("你的服务端不符合该插件的运行最低前提，请使用Paper或PurPur");
-            Bukkit.getPluginManager().disablePlugin(this);
+        getLogger().info("§5插件版本："+version);
+        getLogger().info("§5你的Java版本："+System.getProperty("java.specification.version"));
+        getLogger().info("§5你的系统的位数："+System.getProperty("sun.arch.data.model"));
+        if(! System.getProperty( "java.specification.version").equals("17")){
+            getLogger().warning("§c您的Java版本"+System.getProperty("java.version")+"将在未来不受Refish的支持，请将Java版本升级为Java17或更高");
         }
-        protocolManager = ProtocolLibrary.getProtocolManager();
-        if(!Bukkit.getVersion().contains("1.14.4")){
-            getLogger().warning("该服务器的版本("+Bukkit.getVersion()+")，可能不能使用完整的功能，请等待奶茶对更高版本的支持");
+        if(Objects.equals(Bukkit.getServer().getName(),"CraftBukkit")){
+            getLogger().warning("§c你的服务端可能对该插件的适配性很差，请考虑使用Akarin或Purpur");
+        }
+        if(EnvCheckPassed){
+            getLogger().info("§5环境检查: [§2Passed§5]");
+        }else{
+            getLogger().info("§5环境检查: [§cFailed§5]");
         }
     }
     @Override
@@ -53,6 +51,8 @@ public final class main extends JavaPlugin implements Listener {
         // Plugin startup logicjmmjro-
         //打印Logo
         logoprint();
+        PlayerLogin pl=new PlayerLogin();
+        AsyncChatCheck acc = new AsyncChatCheck();
         getLogger().info("正在加载内部命令");
             Objects.requireNonNull(Bukkit.getPluginCommand("ultraserver")).setExecutor(new CommandHandler());
             Objects.requireNonNull(Bukkit.getPluginCommand("ram")).setExecutor(new CommandHandler());
@@ -68,20 +68,43 @@ public final class main extends JavaPlugin implements Listener {
         Objects.requireNonNull(Bukkit.getPluginCommand("spawn")).setExecutor(new EssDedicatedCommandHandler());
         Objects.requireNonNull(Bukkit.getPluginCommand("sethome")).setExecutor(new EssDedicatedCommandHandler());
         Objects.requireNonNull(Bukkit.getPluginCommand("home")).setExecutor(new EssDedicatedCommandHandler());
+        Objects.requireNonNull(Bukkit.getPluginCommand("login")).setExecutor(new PlayerLoginCommandHandler());
+        Objects.requireNonNull(Bukkit.getPluginCommand("register")).setExecutor(new PlayerLoginCommandHandler());
+        Objects.requireNonNull(Bukkit.getPluginCommand("changepassword")).setExecutor(new PlayerLoginCommandHandler());
             getLogger().info("命令注册成功");
             Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getPluginManager().registerEvents(pl, this);
+        Bukkit.getPluginManager().registerEvents(acc, this);
             getLogger().info("监听器注册成功");
             getLogger().info("正在加载SQLITE数据库");
             EssDedicatedCommandHandler edch = new EssDedicatedCommandHandler();
             SQLiteCommand sc=new SQLiteCommand();
             Connection conn = null;
             try {
+                if  (getConfig().getBoolean("FirstRun")){
+                    sc.createNewTable("""
+                            CREATE TABLE IF NOT EXISTS PlayerHome (
+                             ID INT PRIMARY KEY NOT NULL,
+                             Player text NOT NULL,
+                             Name text,
+                             LocationX real NOT NULL,
+                             LocationY real NOT NULL,
+                             LocationZ real NOT NULL,
+                             World real NOT NULL,
+                            );""");
+                    sc.createNewTable("""
+                            CREATE TABLE IF NOT EXISTS LoginPassword (
+                             ID INT PRIMARY KEY NOT NULL,
+                             Player text NOT NULL,
+                             Password text,
+                            );""");
+                    getConfig().set("FirstRun",false);
+                }
                 // db parameters
-                String url = "jdbc:sqlite:"+new File(getDataFolder(),"EssentialExpansion.db").getPath();
+                String url = "jdbc:sqlite:"+new File(getDataFolder(),"UltraServer.db").getPath();
                 // create a connection to the database
                 conn = DriverManager.getConnection(url);
                 getLogger().warning("Connection to SQLite has been established, URL:"+url);
-                edch.setSQLiteConnection(conn);
                 sc.setSQLiteConnection(conn);
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -96,31 +119,9 @@ public final class main extends JavaPlugin implements Listener {
                     System.out.println(ex.getMessage());
                 }
             }
-        if (getconfig().getBoolean("setting.anti.badword.enable")) {
             getLogger().info("正在加载反脏话机制");
-            main.protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.CHAT) {
-                @Override
-                public void onPacketReceiving(PacketEvent event) {
-                    PacketContainer packet = event.getPacket();
-                    String message = packet.getStrings().read(0);
-                    List<String> list = getConfig().getStringList("setting.anti.badword.list");
-                    if (message.contains(list.get(1)) || message.contains(list.get(2)) || message.contains(list.get(3)) || message.contains(list.get(4)) || message.contains(list.get(5)) || message.contains(list.get(6)) || message.contains(list.get(7)) || message.contains(list.get(8))) {
-                        event.setCancelled(true);
-                        event.getPlayer().sendMessage("大家都是文明人哦(U‿ฺU✿)");
-                    }
-                }
-            });
+            acc.config=getConfig();
             getLogger().info("反脏话机制已启动");
-        } else {
-            String reason;
-            if (!getConfig().getBoolean("setting.anti.badword.enable")) {
-                reason = "配置文件中已经禁用反脏话";
-            } else {
-                reason = "第一次启动或并配置文件不存在";
-            }
-            getLogger().info("由于配置文件原因,反脏话机制暂未加载 原因:" + reason);
-        }
-
         getLogger().info("正在加载全自动垃圾清理系统");
         AutoClean ac = new AutoClean();
         ac.config(getConfig());
@@ -135,12 +136,10 @@ public final class main extends JavaPlugin implements Listener {
         }
         getLogger().info("正在加载Essentials++拓展功能");
         edch.setConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"config.yml")));
+        getLogger().info("正在加载玩家登录功能");
+        pl.setConfig(getConfig());
+        pl.setLoginConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"LoginMsg.yml")));
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
-        if  (getConfig().getBoolean("FirstRun")){
-            sc.createNewTable("CREATE TABLE IF NOT EXISTS PlayerHome (\n" + " ID INT PRIMARY KEY NOT NULL,\n"
-                    +" Player text NOT NULL,\n" + " Name text,\n" +  " LocationX real NOT NULL,\n"+ " LocationY real NOT NULL,\n"+ " LocationZ real NOT NULL,\n"+ " World real NOT NULL,\n" +");");
-            getConfig().set("FirstRun",false);
-        }
     }
 
     @Override
@@ -151,6 +150,8 @@ public final class main extends JavaPlugin implements Listener {
         ptcp.del(2);
         ptcp.del(3);
         getLogger().info("TPA功能已关闭");
+        PlayerLoginCommandHandler plc = new PlayerLoginCommandHandler();
+        plc.map = new HashMap<>();
         getLogger().info("插件已经被卸载了，感谢你的使用UwU");
     }
 
@@ -162,11 +163,5 @@ public final class main extends JavaPlugin implements Listener {
 
     public static int getAtom(){
         return atomicInteger.get();
-    }
-
-
-    @NotNull
-    public FileConfiguration getconfig() {
-        return getConfig();
     }
 }

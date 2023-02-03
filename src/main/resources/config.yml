@@ -1,5 +1,6 @@
 Version: 1.0
 FirstRun: true
+ServerName: "Unknown Server"
 setting:
   anti:
     badword:

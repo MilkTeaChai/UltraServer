@@ -76,18 +76,11 @@ public class CommandHandler implements CommandExecutor, Listener {
                 case "pl":
                     switch (args[1]){
                         case "load":
-                            switch (Plugins.load(args[2])){
-                                case "OK":
-                                    sender.sendMessage("加载成功");
-                                    break;
-                                case "NF":
-                                    sender.sendMessage("找不到该插件");
-                                    break;
-                                case "ID":
-                                    sender.sendMessage("无效的描述信息");
-                                    break;
-                                case "IP":
-                                    sender.sendMessage("无效的插件");
+                            switch (Plugins.load(args[2])) {
+                                case "OK" -> sender.sendMessage("加载成功");
+                                case "NF" -> sender.sendMessage("找不到该插件");
+                                case "ID" -> sender.sendMessage("无效的描述信息");
+                                case "IP" -> sender.sendMessage("无效的插件");
                             }
                             break;
                         case "enable":
