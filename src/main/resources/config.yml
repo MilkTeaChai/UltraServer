@@ -22,10 +22,10 @@ setting:
     CleanMsgWhenOver: "[服务器姬] 哟，这次清理了#个垃圾，感觉自己么么哒"
   LoopBroadcast:
     enable: true
-    Msg1: "你可以在这里输入任何你想要的字符"
-    Msg2: "&3我们支持任何的颜色代码"
-    Msg3: "我们的QQ群784885337"
-    Msg4: "感谢使用UltraServer LoopBoradcast  awa"
+    Msg1: "[服务器姬]你可以在这里输入任何你想要的字符"
+    Msg2: "[服务器姬]§3我们支持任何的颜色代码,使用“§”"
+    Msg3: "[服务器姬]我们的QQ群784885337"
+    Msg4: "[服务器姬]感谢使用UltraServer LoopBoradcast  awa"
     #这里单位 秒
     TimeInterval: 60
 
