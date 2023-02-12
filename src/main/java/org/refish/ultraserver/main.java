@@ -19,7 +19,7 @@ import static org.refish.ultraserver.Utils.Printlns.logoprint;
 public final class main extends JavaPlugin implements Listener {
 
     //全局版本设置 每次新构建时需要修改
-    static final String version ="1.7.0.9";
+    static final String version ="1.7.1.0";
     @Override
     public void onLoad() {
         saveDefaultConfig();
@@ -54,6 +54,7 @@ public final class main extends JavaPlugin implements Listener {
         PlayerLogin pl=new PlayerLogin();
         PlayerCheckTask acc = new PlayerCheckTask();
         EssDedicatedCommandHandler edch = new EssDedicatedCommandHandler();
+        MotdSys ms=new MotdSys();
         getLogger().info("正在加载内部命令");
             Objects.requireNonNull(Bukkit.getPluginCommand("ultraserver")).setExecutor(new CommandHandler());
             Objects.requireNonNull(Bukkit.getPluginCommand("ram")).setExecutor(new CommandHandler());
@@ -78,7 +79,8 @@ public final class main extends JavaPlugin implements Listener {
             Bukkit.getPluginManager().registerEvents(acc, this);
             Bukkit.getPluginManager().registerEvents(new CommandHandler(), this);
         Bukkit.getPluginManager().registerEvents(edch, this);
-            getLogger().info("监听器注册成功，共5个监听器,其中2个用于命令监听");
+        Bukkit.getPluginManager().registerEvents(ms, this);
+            getLogger().info("监听器注册成功，共6个监听器,其中2个用于命令监听");
             getLogger().info("正在加载SQLITE数据库");
             SQLiteCommand sc=new SQLiteCommand();
             Connection conn = null;
@@ -139,6 +141,15 @@ public final class main extends JavaPlugin implements Listener {
         ColorBoard cb =new ColorBoard();
         cb.setConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"LoginMsg.yml")));
         getLogger().info("自定义计分板启动成功！");
+        getLogger().info("正在加载MOTDSys++自定义MOTD功能");
+        ms.setConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"motd.yml")));
+        File icon=new File(getDataFolder(),"icon.jpg");
+        if(icon.exists()){
+            getLogger().info("已捕捉到图标icon.jpg,正在加载...");
+            getLogger().info("MOTDSys++自定义MOTD功能启动成功");
+        }else{
+            getLogger().info("由于未找到图标文件,MOTDSys++自定义MOTD功能启动失败,可能MOTD显示会出点小问题");
+        }
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
     }
 
