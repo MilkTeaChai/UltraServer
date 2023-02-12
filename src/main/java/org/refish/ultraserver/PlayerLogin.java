@@ -31,27 +31,6 @@ public class PlayerLogin implements Runnable,Listener{
         Loginconfig=config;
     }
 
-    @EventHandler
-    public void PlayerQuitCheck(PlayerQuitEvent event){
-        new PlayerLoginCommandHandler().map.put(event.getPlayer(),false);
-    }
-    @EventHandler
-    public void PlayerLoginCheck(PlayerJoinEvent event){
-        event.getPlayer().sendMessage(Objects.requireNonNull(config.getString("ServerName")));
-        event.getPlayer().sendMessage(Objects.requireNonNull(Loginconfig.getString("LoginMsg")));
-        plch = new PlayerLoginCommandHandler().map.get(event.getPlayer());
-        player=event.getPlayer();
-        new Thread(this,"PlayerLoggedCheck");
-        //做一个位移检查
-        Runnable ultp = ()->{
-            while(true){
-                event.getPlayer().teleport(event.getPlayer().getLocation());
-            }
-        };
-        Thread ultpt = new Thread(ultp);
-        this.ultpt = ultpt;
-        ultpt.start();
-    }
     @Override
     //做一个等待，检查玩家是否登录
     public void run() {

@@ -53,7 +53,7 @@ public final class main extends JavaPlugin implements Listener {
         //打印Logo
         logoprint();
         PlayerLogin pl=new PlayerLogin();
-        AsyncChatCheck acc = new AsyncChatCheck();
+        PlayerCheckTask acc = new PlayerCheckTask();
         getLogger().info("正在加载内部命令");
             Objects.requireNonNull(Bukkit.getPluginCommand("ultraserver")).setExecutor(new CommandHandler());
             Objects.requireNonNull(Bukkit.getPluginCommand("ram")).setExecutor(new CommandHandler());
@@ -87,8 +87,8 @@ public final class main extends JavaPlugin implements Listener {
                     conn = DriverManager.getConnection("jdbc:sqlite:"+new File(getDataFolder(),"UltraServer.db").getPath());
                     DatabaseMetaData meta = conn.getMetaData();
                     sc.setSQLiteConnection(conn);
-                    sc.createNewTable("CREATE TABLE IF NOT EXISTS PlayerHome (\n ID INT PRIMARY KEY NOT NULL,\n Player text NOT NULL,\n Name text,\n LocationX real NOT NULL,\n LocationY real NOT NULL,\n LocationZ real NOT NULL,\n World real NOT NULL, \n);");
-                    sc.createNewTable("CREATE TABLE IF NOT EXISTS LoginPassword (\n INT PRIMARY KEY NOT NULL,\n Player text NOT NULL,\n Password text,\n);");
+                    sc.createNewTable("CREATE TABLE IF NOT EXISTS PlayerHome (\n ID INT PRIMARY KEY NOT NULL,\n Player text NOT NULL,\n Name text,\n LocationX real NOT NULL,\n LocationY real NOT NULL,\n LocationZ real NOT NULL,\n World real NOT NULL \n);");
+                    sc.createNewTable("CREATE TABLE IF NOT EXISTS LoginPassword (\n INT PRIMARY KEY NOT NULL,\n Player text NOT NULL,\n Password text\n);");
                     getConfig().set("FirstRun",false);
                 }else{
                 // db parameters
@@ -126,11 +126,18 @@ public final class main extends JavaPlugin implements Listener {
             lb.config(getConfig());
             new Thread(lb,"LoopBroadcast").start();
         }
+        getLogger().info("循环广播启动成功！");
         getLogger().info("正在加载Essentials++拓展功能");
         edch.setConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"config.yml")));
+        getLogger().info("Ess++启动成功！");
         getLogger().info("正在加载玩家登录功能");
         pl.setConfig(getConfig());
         pl.setLoginConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"LoginMsg.yml")));
+        getLogger().info("登录系统启动成功！");
+        getLogger().info("正在加载ColorBoard彩色计分版功能");
+        ColorBoard cb =new ColorBoard();
+        cb.setConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"LoginMsg.yml")));
+        getLogger().info("自定义计分板启动成功！");
         getLogger().info("插件已加载AwA 作者奶茶 QQ3520568665");
     }
 
