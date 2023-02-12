@@ -6,10 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -18,12 +15,12 @@ import java.util.Objects;
 
 import static java.lang.Thread.sleep;
 
-public class PlayerLogin implements Runnable,Listener{
-    FileConfiguration config;
+public class PlayerLogin {
+    static FileConfiguration config;
     static FileConfiguration Loginconfig;
-    Boolean plch;
     Player player;
     Thread ultpt;
+    PlayerLoginCommandHandler PlayerLoginCommandHandler=new PlayerLoginCommandHandler();
     public void setConfig(FileConfiguration config){
         this.config=config;
     }
@@ -31,18 +28,17 @@ public class PlayerLogin implements Runnable,Listener{
         Loginconfig=config;
     }
 
-    @Override
     //做一个等待，检查玩家是否登录
-    public void run() {
+    Runnable check=()-> {
         try {
             sleep(Loginconfig.getInt("waitsecond")* 1000L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if (!plch){
+        if (!PlayerLoginCommandHandler.map.get(player)){
             player.kickPlayer(Loginconfig.getString("welcome.timeout"));
         }
-    }
+    };
 }
 class PlayerLoginCommandHandler implements CommandExecutor, Listener {
     PlayerLogin pl = new PlayerLogin();
@@ -67,7 +63,6 @@ class PlayerLoginCommandHandler implements CommandExecutor, Listener {
                     }
                     if(Objects.equals(Password, args[0])){
                         map.put((Player)sender,true);
-                        pl.ultpt.stop();
                         sender.sendMessage(Objects.requireNonNull(PlayerLogin.Loginconfig.getString("logged_in")));
                         Bukkit.broadcastMessage(Objects.requireNonNull(PlayerLogin.Loginconfig.getString("welcome.login_announcement")).replace("{player}",sender.getName()));
                     }
@@ -92,7 +87,6 @@ class PlayerLoginCommandHandler implements CommandExecutor, Listener {
                 }else{
                     sqlc.insertPassword(sender.getName(), args[1]);
                     map.put((Player)sender,true);
-                    pl.ultpt.stop();
                     sender.sendMessage(Objects.requireNonNull(PlayerLogin.Loginconfig.getString("registered")));
                     Bukkit.broadcastMessage(Objects.requireNonNull(PlayerLogin.Loginconfig.getString("welcome.login_announcement")).replace("{player}",sender.getName()));
 

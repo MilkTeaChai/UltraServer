@@ -44,8 +44,11 @@ public class CommandHandler implements CommandExecutor, Listener {
                 case "whistlist":
                     if (Objects.equals(args[2], "on")) {
                         Bukkit.setWhitelist(true);
-                        Player player = (Player) Bukkit.getOnlinePlayers();
-                        player.kickPlayer("UltraServer:白名单已启动，请自行询问腐竹和管理员相关事宜");
+                        for(Player player:Bukkit.getOnlinePlayers()){
+                            if(!player.isOp()){
+                                player.kickPlayer("§d服务器姬§5》》§3白名单已启动，请自行询问腐竹和管理员相关事宜");
+                            }
+                        }
                     } else {
                         if (Objects.equals(args[2], "off")) {
                             Bukkit.setWhitelist(false);

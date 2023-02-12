@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import java.sql.*;
 
 public class SQLiteCommand {
-    Connection conn;
+    static Connection conn;
 
     public void setSQLiteConnection(Connection conn){
         this.conn=conn;
@@ -96,7 +96,6 @@ public class SQLiteCommand {
         Statement st=conn.createStatement();
         String sql="update  LoginPassword set Password="+Password+" where Player='"+player+"'";
         st.execute(sql);
-        st.close();
         } catch (SQLException e) {
             Bukkit.getLogger().warning(e.getMessage());
         }

@@ -13,19 +13,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.refish.ultraserver.Utils.Printlns.logoprint;
-import org.refish.ultraserver.EssDedicatedCommandHandler.PlayerTeleportCachePool;
 
 public final class main extends JavaPlugin implements Listener {
 
     //全局版本设置 每次新构建时需要修改
-    static final String version ="1.7.0.8";
+    static final String version ="1.7.0.9";
     @Override
     public void onLoad() {
         saveDefaultConfig();
         saveResource("LoginMsg.yml",false);
+        saveResource("ColorBoard.yml",false);
         boolean EnvCheckPassed =!System.getProperty( "java.specification.version").equals("1.7") && !Objects.equals(Bukkit.getServer().getName(),"CraftBukkit");
         getLogger().info("§b======[§5环境检查§b]======");
         getLogger().info("§5正在检查你的环境：");
@@ -54,6 +53,7 @@ public final class main extends JavaPlugin implements Listener {
         logoprint();
         PlayerLogin pl=new PlayerLogin();
         PlayerCheckTask acc = new PlayerCheckTask();
+        EssDedicatedCommandHandler edch = new EssDedicatedCommandHandler();
         getLogger().info("正在加载内部命令");
             Objects.requireNonNull(Bukkit.getPluginCommand("ultraserver")).setExecutor(new CommandHandler());
             Objects.requireNonNull(Bukkit.getPluginCommand("ram")).setExecutor(new CommandHandler());
@@ -72,24 +72,23 @@ public final class main extends JavaPlugin implements Listener {
         Objects.requireNonNull(Bukkit.getPluginCommand("login")).setExecutor(new PlayerLoginCommandHandler());
         Objects.requireNonNull(Bukkit.getPluginCommand("register")).setExecutor(new PlayerLoginCommandHandler());
         Objects.requireNonNull(Bukkit.getPluginCommand("changepassword")).setExecutor(new PlayerLoginCommandHandler());
-            getLogger().info("命令注册成功");
+            getLogger().info("命令注册成功,共17条命令，3个指令集");
             Bukkit.getPluginManager().registerEvents(this, this);
-        Bukkit.getPluginManager().registerEvents(pl, this);
-        Bukkit.getPluginManager().registerEvents(acc, this);
-            getLogger().info("监听器注册成功");
+            Bukkit.getPluginManager().registerEvents(new PlayerLoginCommandHandler(), this);
+            Bukkit.getPluginManager().registerEvents(acc, this);
+            Bukkit.getPluginManager().registerEvents(new CommandHandler(), this);
+        Bukkit.getPluginManager().registerEvents(edch, this);
+            getLogger().info("监听器注册成功，共5个监听器,其中2个用于命令监听");
             getLogger().info("正在加载SQLITE数据库");
-
-            EssDedicatedCommandHandler edch = new EssDedicatedCommandHandler();
             SQLiteCommand sc=new SQLiteCommand();
             Connection conn = null;
             try {
-                if  (getConfig().getBoolean("FirstRun")){
+                if  (new File(getDataFolder(),"UltraServer.db").exists()){
                     conn = DriverManager.getConnection("jdbc:sqlite:"+new File(getDataFolder(),"UltraServer.db").getPath());
                     DatabaseMetaData meta = conn.getMetaData();
                     sc.setSQLiteConnection(conn);
                     sc.createNewTable("CREATE TABLE IF NOT EXISTS PlayerHome (\n ID INT PRIMARY KEY NOT NULL,\n Player text NOT NULL,\n Name text,\n LocationX real NOT NULL,\n LocationY real NOT NULL,\n LocationZ real NOT NULL,\n World real NOT NULL \n);");
                     sc.createNewTable("CREATE TABLE IF NOT EXISTS LoginPassword (\n INT PRIMARY KEY NOT NULL,\n Player text NOT NULL,\n Password text\n);");
-                    getConfig().set("FirstRun",false);
                 }else{
                 // db parameters
                 String url = "jdbc:sqlite:"+new File(getDataFolder(),"UltraServer.db").getPath();
@@ -125,8 +124,10 @@ public final class main extends JavaPlugin implements Listener {
             LoopBroadcast lb =new LoopBroadcast();
             lb.config(getConfig());
             new Thread(lb,"LoopBroadcast").start();
+            getLogger().info("循环广播启动成功！");
+        }else{
+            getLogger().info("配置文件中已将循环广播关闭");
         }
-        getLogger().info("循环广播启动成功！");
         getLogger().info("正在加载Essentials++拓展功能");
         edch.setConfig(YamlConfiguration.loadConfiguration(new File(getDataFolder(),"config.yml")));
         getLogger().info("Ess++启动成功！");
@@ -144,23 +145,15 @@ public final class main extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        PlayerTeleportCachePool ptcp =new PlayerTeleportCachePool();
-        ptcp.del(1);
-        ptcp.del(2);
-        ptcp.del(3);
-        getLogger().info("TPA功能已关闭");
+        try {
+            SQLiteCommand.conn.close();
+            getLogger().info("SQLite数据库已关闭！");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         PlayerLoginCommandHandler plc = new PlayerLoginCommandHandler();
         plc.map = new HashMap<>();
+        getLogger().info("登录数据已清空");
         getLogger().info("插件已经被卸载了，感谢你的使用UwU");
-    }
-
-    static AtomicInteger atomicInteger =new AtomicInteger();
-
-    public static void setAtom(){
-        atomicInteger.getAndIncrement();
-    }
-
-    public static int getAtom(){
-        return atomicInteger.get();
     }
 }

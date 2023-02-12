@@ -22,17 +22,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SortedSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.bukkit.Bukkit.getLogger;
 
 public class Utils {
-    public static void AutoCleanMethod(){
+    public static int AutoCleanMethod(){
+        AtomicInteger i = new AtomicInteger();
         Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
             if (entity instanceof Item && !(entity instanceof Player) && !(entity instanceof Animals) && !(entity instanceof Monster) && !entity.isDead()){
                 entity.remove();
-                main.setAtom();
+                i.getAndIncrement();
             }
         }));
+        return i.intValue();
     }
     public static class Plugins{
         public static Plugin getPluginByName(String name) {

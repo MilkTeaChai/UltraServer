@@ -1,5 +1,8 @@
 package org.refish.ultraserver;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.refish.ultraserver.PlayerLogin.Loginconfig;
+import static org.refish.ultraserver.PlayerLogin.config;
 
 public class PlayerCheckTask implements Listener {
     FileConfiguration config;
@@ -23,21 +27,23 @@ public class PlayerCheckTask implements Listener {
     }
     @EventHandler
     public void PlayerLoginCheck(PlayerJoinEvent event){
+        if(!config.getString("setting.Essentials.SpawnWorld").equals("justaexample")){
+            World world = Bukkit.getWorld(config.getString("setting.Essentials.SpawnWorld"));
+            if(!(world ==null)){
+                event.getPlayer().teleport(new Location(world,config.getDouble("setting.Essentials.SpawnX"),config.getDouble("setting.Essentials.SpawnY"),config.getDouble("setting.Essentials.SpawnZ")));
+            }
+        }
         event.getPlayer().setScoreboard(new ColorBoard().sendBoard());
         event.getPlayer().sendMessage(Objects.requireNonNull(config.getString("ServerName")));
         event.getPlayer().sendMessage(Objects.requireNonNull(Loginconfig.getString("LoginMsg")));
         plchb = new PlayerLoginCommandHandler().map.get(event.getPlayer());
-        new PlayerLogin().player=event.getPlayer();
-        new Thread(new PlayerLogin(),"PlayerLoggedCheck");
+        PlayerLogin pl=new PlayerLogin();
+        pl.player=event.getPlayer();
+        new Thread(pl.check,"PlayerLoggedCheck").start();
         //做一个位移检查
-        Runnable ultp = ()->{
-            while(true){
-                event.getPlayer().teleport(event.getPlayer().getLocation());
-            }
-        };
-        Thread ultpt = new Thread(ultp);
-        new PlayerLogin().ultpt=ultpt;
-        ultpt.start();
+        while(!plch.map.get(event.getPlayer())){
+            event.getPlayer().teleport(event.getPlayer().getLocation());
+        }
     }
     @EventHandler
     public void ChatCheck(AsyncPlayerChatEvent event){
